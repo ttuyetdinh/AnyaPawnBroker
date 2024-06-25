@@ -1,5 +1,5 @@
 # compiled output
-/dist
+/out
 /node_modules
 
 # Logs
@@ -38,3 +38,4 @@ lerna-debug.log*
 /files
 .env
 /ormconfig.json
+out/main.js
