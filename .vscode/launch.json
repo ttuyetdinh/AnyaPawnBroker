@@ -7,11 +7,25 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch + Hot Reload",
+            "skipFiles": ["<node_internals>/**"],
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ts-node-dev",
+            "args": ["--respawn", "--transpile-only", "${workspaceRoot}/src/main.ts"],
+            "console": "integratedTerminal" // notwork becuse outer folder has space in name
+            // "program": dont need because the program is passed via args
+            // "preLaunchTask": dont need because ts-node-dev run the typescript file directly
+            // "outFiles": dont need because ts-node-dev run the typescript file directly
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "skipFiles": ["<node_internals>/**"],
             "program": "${workspaceFolder}\\src\\main.ts",
             "preLaunchTask": "npm: build",
-            "outFiles": ["${workspaceFolder}/out/**/*.js"]
+            "outFiles": ["${workspaceFolder}/out/**/*.js"],
+            "console": "integratedTerminal"
+            // "internalConsoleOptions": "openOnSessionStart" // only works with "console": "internalConsole"
         }
     ]
 }
