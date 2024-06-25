@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "node out/main.js",
+        "start": "node dist/main.js",
         "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
         "prestart": "npm run build",
         "build": "tsc"

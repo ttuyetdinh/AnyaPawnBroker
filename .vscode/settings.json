@@ -11,14 +11,14 @@
         // "**/.git": true,
         // "**/.DS_Store": true,
         // "**/node_modules": true,
-        // "**/out": true
+        // "**/dist": true
     },
     "files.watcherExclude": {
         "**/node_modules/*": true,
-        "**/out/*": true
+        "**/dist/*": true
     },
     "search.exclude": {
         "**/node_modules": true,
-        "**/out": true
+        "**/dist": true
     }
 }

@@ -23,7 +23,7 @@
             "skipFiles": ["<node_internals>/**"],
             "program": "${workspaceFolder}\\src\\main.ts",
             "preLaunchTask": "npm: build",
-            "outFiles": ["${workspaceFolder}/out/**/*.js"],
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
             "console": "integratedTerminal"
             // "internalConsoleOptions": "openOnSessionStart" // only works with "console": "internalConsole"
         }
