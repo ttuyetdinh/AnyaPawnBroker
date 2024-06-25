@@ -1,0 +1,13 @@
+{  "scripts": {
+  "start": "node out/app.js",
+  "prestart": "npm run build",
+  "build": "tsc"
+},
+  "dependencies": {
+    "@nestjs/common": "^10.3.9",
+    "@nestjs/core": "^10.3.9",
+    "@nestjs/platform-express": "^10.3.9",
+    "reflect-metadata": "^0.2.2",
+    "typescript": "^5.5.2"
+  }
+}
