@@ -10,5 +10,6 @@ export class UserDto {
     @Expose()
     username: string;
 
-    // password: string;
+    @Expose()
+    token: string;
 }

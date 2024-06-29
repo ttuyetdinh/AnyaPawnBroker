@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UserDto } from '../users/dtos/user.dto';
@@ -18,5 +19,11 @@ export class AuthController {
     @Post('login')
     async login(@Body() authUser: AuthUserDto) {
         return this.authService.login(authUser);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Post('change-password')
+    async changePassword() {
+        return 'Password changed successfully';
     }
 }
