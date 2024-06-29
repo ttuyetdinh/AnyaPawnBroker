@@ -6,6 +6,7 @@ import { Report } from './reports/report.entity';
 import { ReportModule } from './reports/reports.module';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     controllers: [AppController],
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
         }),
         UsersModule,
         ReportModule,
+        AuthModule,
     ],
 })
 export class AppModule {}

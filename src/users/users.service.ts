@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './user.entity';
 
 @Injectable()
@@ -10,6 +11,10 @@ export class UsersService {
         private repo: Repository<User>,
     ) {
         this.repo = repo;
+    }
+
+    async isUserExist(email: string) {
+        return this.repo.existsBy({ email: email });
     }
 
     async findById(id: string) {
@@ -24,9 +29,9 @@ export class UsersService {
         return this.repo.find();
     }
 
-    async create(email: string, password: string) {
-        const user = this.repo.create({ email, password });
-        return this.repo.save(user);
+    async create(user: CreateUserDto) {
+        const toBeCreate = this.repo.create(user);
+        return this.repo.save(toBeCreate);
     }
 
     async update(id: string, attrs: Partial<User>) {
