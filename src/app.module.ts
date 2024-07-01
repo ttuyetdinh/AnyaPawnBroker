@@ -1,27 +1,23 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Report } from './reports/report.entity';
-import { ReportModule } from './reports/reports.module';
-import { User } from './users/user.entity';
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PostgresConfigService } from './config/database.config';
+import { ReportModule } from './reports/reports.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
     controllers: [AppController],
     providers: [AppService],
     imports: [
-        TypeOrmModule.forRoot({
-            type: 'postgres',
-            host: 'localhost',
-            port: 5432,
-            database: 'AnyaPawnBroker',
-            entities: [User, Report],
-            username: 'sa',
-            password: '1',
-            logging: true,
-            synchronize: true, // for development only: auto sync schema with database
+        ConfigModule.forRoot({
+            isGlobal: true, //make the config module global hence can be used in other modules without importing
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule], //import ConfigModule to use ConfigService in PostgresConfigService because of async
+            useClass: PostgresConfigService, //get the config from instance from TypeOrmOptionsFactory
         }),
         UsersModule,
         ReportModule,
