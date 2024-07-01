@@ -6,10 +6,8 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @InjectRepository(User)
-        private repo: Repository<User>,
-    ) {
+    constructor(@InjectRepository(User) private repo: Repository<User>) {
+        //@InjectRepository(User) is a decorator that injects the repository instance into the service
         this.repo = repo;
     }
 

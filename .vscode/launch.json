@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch + Hot Reload",
-            "skipFiles": ["<node_internals>/**"],
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
             "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ts-node-dev",
             "args": ["--respawn", "--transpile-only", "${workspaceRoot}/src/main.ts"],
             "console": "integratedTerminal" // notwork becuse outer folder has space in name

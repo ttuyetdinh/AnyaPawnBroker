@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     async validate(payload: AuthPayload) {
+        // return value of this method will be injected into the request object as req.user
         return payload;
     }
 }
