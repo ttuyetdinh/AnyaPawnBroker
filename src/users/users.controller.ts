@@ -19,13 +19,13 @@ import { UsersService } from './users.service';
 
 @Serialize(UserDto)
 @UseInterceptors(CurrentUserInterceptor)
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {
         this.usersService = usersService;
     }
 
-    @UseGuards(JwtGuard)
     @Get('/me')
     async getMe(@CurrentUser() user: any) {
         return user;
