@@ -1,11 +1,24 @@
-import { Body, Controller, Delete, Get, Param, Patch, Query, Req, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Query,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { Serialize } from '../interceptors/serialize.interceptor';
+import { CurrentUser } from './decorators/current-user.decorator';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { UsersService } from './users.service';
 
 @Serialize(UserDto)
+@UseInterceptors(CurrentUserInterceptor)
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {
@@ -14,8 +27,8 @@ export class UsersController {
 
     @UseGuards(JwtGuard)
     @Get('/me')
-    async getMe(@Req() req: any) {
-        return req.user;
+    async getMe(@CurrentUser() user: any) {
+        return user;
     }
 
     @Get('/user')

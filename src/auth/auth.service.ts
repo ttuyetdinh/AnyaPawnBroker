@@ -43,7 +43,6 @@ export class AuthService {
         const payload: AuthPayload = {
             id: user.id,
             email: user.email,
-            username: user.username,
         };
 
         const jwtToken = await this.createJwtToken(payload);
@@ -66,7 +65,7 @@ export class AuthService {
         return hashBuffer.toString('hex') === hashedPassword;
     }
 
-    private async createJwtToken(payload: any) {
+    private async createJwtToken(payload: AuthPayload) {
         return this.jwtService.sign(payload);
     }
 }

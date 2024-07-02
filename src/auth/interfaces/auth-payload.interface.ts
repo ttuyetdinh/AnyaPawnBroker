@@ -1,5 +1,5 @@
 export interface AuthPayload {
     id: string;
-    username: string;
     email: string;
+    role?: [string]; //role is optional property
 }
