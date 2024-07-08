@@ -7,16 +7,16 @@ import { AuthService } from './auth.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
 import { AuthPayload } from './interfaces/auth-payload.interface';
 
+export const testUser = (): User => ({
+    id: '1',
+    email: 'a@gmail.com',
+    password: '1234',
+    username: 'ppp',
+});
 describe('AuthService', () => {
     let service: AuthService;
     let testUserService: Partial<UsersService>;
     let testJwtService: Partial<JwtService>;
-    const testUser = (): User => ({
-        id: '1',
-        email: 'a@gmail.com',
-        password: '1234',
-        username: 'ppp',
-    });
 
     beforeEach(async () => {
         let users: User[] = [];
