@@ -26,6 +26,28 @@
             "outFiles": ["${workspaceFolder}/dist/**/*.js"],
             "console": "integratedTerminal"
             // "internalConsoleOptions": "openOnSessionStart" // only works with "console": "internalConsole"
+        },
+        {
+            // config to debug the jest unit test for nestjs
+            "type": "node",
+            "request": "launch",
+            "name": "Jest All",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "test",
+                "${fileBasenameNoExtension}",
+                "--detectOpenHandles",
+                "--runInBand",
+                "--no-cache",
+                "--watchAll",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
         }
     ]
 }
