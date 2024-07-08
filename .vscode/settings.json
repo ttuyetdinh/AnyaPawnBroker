@@ -2,6 +2,7 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "editor.formatOnSave": true,
+    "editor.fontSize": 13,
     "editor.codeActionsOnSave": {
         // "source.fixAll": "always",
         "source.organizeImports": "always"
