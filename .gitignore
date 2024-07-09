@@ -4,6 +4,9 @@
 
 package-lock.json
 
+.env
+.env.test
+
 # Logs
 logs
 *.log

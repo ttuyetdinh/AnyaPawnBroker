@@ -41,6 +41,19 @@ describe('App Test (e2e)', () => {
             });
     });
 
+    it('sign up success then login in a user success', async () => {
+        const newUser = { email: 'a@gmail.com', password: '1234' };
+        const res = await request.default(app.getHttpServer()).post('/auth/signup').send(newUser);
+
+        const res2 = await request.default(app.getHttpServer()).post('/auth/login').send(newUser);
+
+        expect(res2.body.id).toBeDefined();
+        expect(res2.body.email).toEqual(newUser.email);
+        expect(res2.body.username).toBeDefined();
+        expect(res2.body.password).toBeUndefined();
+        expect(res2.body.token).toBeDefined();
+    });
+
     afterEach(async () => {
         await clearDatabase(app);
     });
