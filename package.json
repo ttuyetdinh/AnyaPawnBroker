@@ -3,7 +3,11 @@
         "start": "node dist/main.js",
         "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
         "prestart": "npm run build",
-        "build": "tsc"
+        "build": "tsc",
+        "load:test-env": "dotenv -e .evn.test",
+        "test:e2e": "dotenv -e .evn.test --config ./test/jest-e2e.json",
+        "test:e2e:watch": "dotenv -e .evn.test jest --watch --detectOpenHandles --config ./test/jest-e2e.json",
+        "test:watch": "jest --watch --config jest.config.js"
     },
     "dependencies": {
         "@nestjs/common": "^10.3.9",
@@ -28,6 +32,10 @@
         "@types/passport": "^1.0.16",
         "@types/passport-jwt": "^4.0.1",
         "@types/passport-local": "^1.0.38",
+        "@types/supertest": "^6.0.2",
+        "dotenv-cli": "^7.4.2",
+        "supertest": "^7.0.0",
+        "ts-jest": "^29.1.5",
         "ts-node-dev": "^2.0.0"
     }
 }

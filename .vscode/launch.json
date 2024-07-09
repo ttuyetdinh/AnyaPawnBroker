@@ -48,6 +48,18 @@
             "windows": {
                 "program": "${workspaceFolder}/node_modules/jest/bin/jest"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest E2E",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": ["--detectOpenHandles", "--config", "./test/jest-e2e.json"],
+            "console": "integratedTerminal",
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
         }
     ]
 }
