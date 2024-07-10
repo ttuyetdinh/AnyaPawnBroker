@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Report {
@@ -25,4 +25,17 @@ export class Report {
 
     @Column()
     lng: number;
+
+    @CreateDateColumn({
+        type: 'timestamp without time zone',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    })
+    created_at: Date;
+
+    @CreateDateColumn({
+        type: 'timestamp without time zone',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+        onUpdate: 'CURRENT_TIMESTAMP(6)', // only works with MySQL :)
+    })
+    updated_at: Date;
 }
