@@ -12,31 +12,63 @@ export class ReportService {
     }
 
     async findById(id: string) {
-        const result = await this.repo.findOneBy({ id: id });
-        return result;
+        // findOne can join the relations, findOnoBy can't
+        const report = await this.repo.findOne({
+            where: { id: id },
+            relations: ['user', 'approvedBy'],
+        });
+        return report;
     }
 
     async findAll() {
-        return this.repo.find();
+        const reports = this.repo.find();
+        return reports;
     }
 
-    async create(report: CreateReportDto) {
+    async create(report: CreateReportDto, user: any) {
         const toBeCreate = this.repo.create(report); // create a new instance of the entity in the schema
-        return this.repo.save(toBeCreate); // save the instance to the database
+
+        // assign the user to the report
+        toBeCreate.user = user;
+
+        const result = await this.repo.save(toBeCreate); // save the instance to the database
+        return result;
     }
 
     async update(id: string, attrs: Partial<Report>) {
-        let report = await this.repo.findOneBy({ id: id });
+        let report = await this.repo.findOne({
+            where: { id: id },
+            relations: ['user', 'approvedBy'],
+        });
+
+        if (!report) {
+            throw new Error('Report not found');
+        }
+
+        Object.assign(report, attrs);
+
+        // Save method skip the undefined values in the update object
+        // Also, it does query the db again, and update if exsit, else insert
+        // save can use with listener and subscriber
+        await this.repo.save(report);
+
+        return report;
+    }
+
+    async approveReport(id: string, user: any) {
+        let report = await this.repo.findOne({
+            where: { id: id },
+            relations: ['user', 'approvedBy'],
+        });
 
         if (!report) {
             return null;
         }
 
-        attrs.updated_at = new Date(); // manually update the updated_at field
-        // update skip the undefined values in the update objects
-        await this.repo.update({ id: id }, attrs);
-
-        report = await this.repo.findOneBy({ id: id });
+        report.approvedBy = user;
+        report.isApproved = true;
+        report.approved_at = new Date();
+        await this.repo.save(report);
 
         return report;
     }
@@ -61,10 +93,16 @@ export class ReportService {
             return null;
         }
 
-        Object.assign(report, attrs);
+        attrs.updated_at = new Date(); // manually update the updated_at field
+        // update skip the undefined values in the update objects
+        // update can't work with listener and subscriber
+        await this.repo.update({ id: id }, attrs);
 
-        // Save method skip the undefined values in the update object
-        // Also, it does query the db again, and update if exsit, else insert
-        return this.repo.save(report);
+        report = await this.repo.findOne({
+            where: { id: id },
+            relations: ['user', 'approvedBy'],
+        });
+
+        return report;
     }
 }
