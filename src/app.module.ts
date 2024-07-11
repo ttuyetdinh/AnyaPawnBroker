@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PostgresConfigService } from './config/database.config';
+import { ReportModule } from './reports/reports.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -19,7 +20,7 @@ import { UsersModule } from './users/users.module';
             useClass: PostgresConfigService, //get the config from instance from TypeOrmOptionsFactory
         }),
         UsersModule,
-        // ReportModule,
+        ReportModule,
         AuthModule,
     ],
 })
