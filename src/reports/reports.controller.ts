@@ -9,7 +9,10 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from '../auth/enums/role.enum';
 import { JwtGuard } from '../auth/guard/jwt.guard';
+import { RoleGuard } from '../auth/guard/role.guard';
 import { DateTransformToLocal } from '../interceptors/date-transform.interceptor';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
@@ -38,12 +41,16 @@ export class ReportController {
         return this.reportService.findById(id);
     }
 
+    @Roles(Role.USER)
+    @UseGuards(RoleGuard)
     @Post()
     async createReport(@Body() createReportDto: CreateReportDto, @CurrentUser() user: any) {
         // create report
         return this.reportService.create(createReportDto, user);
     }
 
+    @Roles(Role.APPROVER)
+    @UseGuards(RoleGuard)
     @Post('/:id/approve')
     async approveReport(@Param('id') id: string, @CurrentUser() user: any) {
         // approve report

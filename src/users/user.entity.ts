@@ -15,6 +15,9 @@ export class User {
     @Column()
     password: string;
 
+    @Column({ default: 'user' })
+    role: string;
+
     // one to many relationship with reports
     // @OneToMany('Report', 'user')
     @OneToMany(() => Report, (report) => report.user)

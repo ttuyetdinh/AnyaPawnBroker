@@ -5,6 +5,7 @@ import { promisify } from 'util';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
+import { Role } from './enums/role.enum';
 import { AuthPayload } from './interfaces/auth-payload.interface';
 
 const scrypt = promisify(_scrypt);
@@ -22,6 +23,7 @@ export class AuthService {
             email: newUser.email,
             username: newUser.username || newUser.email.split('@')[0],
             password: await this.hashPassword(newUser.password),
+            role: newUser.role,
         };
 
         const createdUser = await this.usersService.create(toBeCreatedUser);
@@ -43,6 +45,7 @@ export class AuthService {
         const payload: AuthPayload = {
             id: user.id,
             email: user.email,
+            role: user.role as Role,
         };
 
         const jwtToken = await this.createJwtToken(payload);

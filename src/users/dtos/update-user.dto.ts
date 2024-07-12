@@ -7,5 +7,13 @@ export class UpdateUserDto {
 
     @IsString()
     @IsOptional()
+    username: string;
+
+    @IsString()
+    @IsOptional()
     password: string;
+
+    @IsString()
+    @IsOptional()
+    Role: string;
 }
