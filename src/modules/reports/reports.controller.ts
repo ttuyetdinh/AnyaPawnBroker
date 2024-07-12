@@ -9,14 +9,14 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { Roles } from '../auth/decorators/role.decorator';
-import { Role } from '../auth/enums/role.enum';
-import { JwtGuard } from '../auth/guard/jwt.guard';
-import { RoleGuard } from '../auth/guard/role.guard';
-import { DateTransformToLocal } from '../interceptors/date-transform.interceptor';
-import { Serialize } from '../interceptors/serialize.interceptor';
-import { CurrentUser } from '../users/decorators/current-user.decorator';
-import { CurrentUserInterceptor } from '../users/interceptors/current-user.interceptor';
+import { CurrentUser } from '../../decorators/current-user.decorator';
+import { Roles } from '../../decorators/role.decorator';
+import { Role } from '../../enums/role.enum';
+import { JwtGuard } from '../../guard/jwt.guard';
+import { RoleGuard } from '../../guard/role.guard';
+import { CurrentUserInterceptor } from '../../interceptors/current-user.interceptor';
+import { DateTransformToLocal } from '../../interceptors/date-transform.interceptor';
+import { Serialize } from '../../interceptors/serialize.interceptor';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportDto } from './dtos/report.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';

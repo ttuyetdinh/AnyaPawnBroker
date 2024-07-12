@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { scrypt as _scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
+import { Role } from '../../enums/role.enum';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
-import { Role } from './enums/role.enum';
 import { AuthPayload } from './interfaces/auth-payload.interface';
 
 const scrypt = promisify(_scrypt);

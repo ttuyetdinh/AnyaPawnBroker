@@ -1,4 +1,4 @@
-import { Role } from './enums/role.enum';
+import { Role } from '../../enums/role.enum';
 import { AuthorizedParams } from './interfaces/authorized-params.interface';
 
 /**

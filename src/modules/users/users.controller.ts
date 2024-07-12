@@ -9,12 +9,12 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { JwtGuard } from '../auth/guard/jwt.guard';
-import { Serialize } from '../interceptors/serialize.interceptor';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from '../../decorators/current-user.decorator';
+import { JwtGuard } from '../../guard/jwt.guard';
+import { CurrentUserInterceptor } from '../../interceptors/current-user.interceptor';
+import { Serialize } from '../../interceptors/serialize.interceptor';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { UsersService } from './users.service';
 
 @Serialize(UserDto)
