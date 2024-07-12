@@ -22,7 +22,7 @@ import { ReportDto } from './dtos/report.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
 import { ReportService } from './reports.service';
 
-@UseGuards(JwtGuard)
+@UseGuards(JwtGuard, RoleGuard)
 @Serialize(ReportDto) // post-interceptor
 @DateTransformToLocal() // post-interceptor
 @UseInterceptors(CurrentUserInterceptor) // pre-interceptor
@@ -42,7 +42,6 @@ export class ReportController {
     }
 
     @Roles(Role.USER)
-    @UseGuards(RoleGuard)
     @Post()
     async createReport(@Body() createReportDto: CreateReportDto, @CurrentUser() user: any) {
         // create report
@@ -50,7 +49,6 @@ export class ReportController {
     }
 
     @Roles(Role.APPROVER)
-    @UseGuards(RoleGuard)
     @Post('/:id/approve')
     async approveReport(@Param('id') id: string, @CurrentUser() user: any) {
         // approve report
