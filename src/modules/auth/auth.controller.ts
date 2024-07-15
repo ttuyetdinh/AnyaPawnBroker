@@ -1,4 +1,5 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Public } from '../../decorators/public-access.decorator';
 import { JwtGuard } from '../../guard/jwt.guard';
 import { Serialize } from '../../interceptors/serialize.interceptor';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
@@ -11,11 +12,13 @@ import { AuthUserDto } from './dtos/auth-user.dto';
 export class AuthController {
     constructor(private authService: AuthService) {}
 
+    @Public()
     @Post('signup')
     async signUp(@Body() newUser: CreateUserDto) {
         return this.authService.signUp(newUser);
     }
 
+    @Public()
     @Post('login')
     async login(@Body() authUser: AuthUserDto) {
         return this.authService.login(authUser);
