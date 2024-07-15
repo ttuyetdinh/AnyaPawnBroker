@@ -6,6 +6,7 @@ import { IS_PUBLIC_KEY } from '../decorators/public-access.decorator';
 
 @Injectable()
 // create a guard that extends AuthGuard and uses the jwt strategy
+// default: jwt validation is enabled for all routes, to disable it, use the @Public() decorator
 export class JwtGuard extends AuthGuard('jwt') {
     constructor(private reflector: Reflector) {
         super();

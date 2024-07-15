@@ -22,7 +22,7 @@ export class AccessControlService {
      */
     isAuthorized({ currentRole, requiredRole }: AuthorizedParams): boolean | Promise<boolean> {
         for (const hierarchy of this.hierachies) {
-            const userRolePriority = hierarchy.get(currentRole.toUpperCase()); // get the priority of the current user role
+            const userRolePriority = hierarchy.get(currentRole?.toUpperCase()); // get the priority of the current user role
             const requiredRolePriority = hierarchy.get(requiredRole); // get the priority of the required role to perform the action
 
             if (

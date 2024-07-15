@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostgresConfigService } from './config/database.config';
 import { JwtGuard } from './guard/jwt.guard';
+import { RoleGuard } from './guard/role.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { ReportModule } from './modules/reports/reports.module';
 import { UsersModule } from './modules/users/users.module';
@@ -14,10 +15,16 @@ import { UsersModule } from './modules/users/users.module';
     controllers: [AppController],
     providers: [
         AppService,
+        // the guards is executed in the order they are provided
         {
             // enable the JwtGuard globally
             provide: APP_GUARD,
             useClass: JwtGuard,
+        },
+        {
+            // enable the RoleGuard globally
+            provide: APP_GUARD,
+            useClass: RoleGuard,
         },
     ],
     imports: [
