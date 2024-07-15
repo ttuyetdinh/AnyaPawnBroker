@@ -39,11 +39,11 @@ export class Report {
     isApproved: boolean;
 
     // many to one relationship with user. This creates a default userId column on the report table
-    @ManyToOne(() => User, (user) => user.reports)
+    @ManyToOne(() => User, (user) => user.reports, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'userId' }) // uses to set the fk column name
     user: User;
 
-    @ManyToOne(() => User, (user) => user.reports)
+    @ManyToOne(() => User, (user) => user.reports, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'approvedById' }) // uses to set the fk column name
     approvedBy: User;
 

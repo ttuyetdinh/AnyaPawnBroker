@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { scrypt as _scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
+import { Role } from '../../enums/role.enum';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
@@ -22,6 +23,7 @@ export class AuthService {
             email: newUser.email,
             username: newUser.username || newUser.email.split('@')[0],
             password: await this.hashPassword(newUser.password),
+            role: newUser.role,
         };
 
         const createdUser = await this.usersService.create(toBeCreatedUser);
@@ -43,6 +45,7 @@ export class AuthService {
         const payload: AuthPayload = {
             id: user.id,
             email: user.email,
+            role: user.role as Role,
         };
 
         const jwtToken = await this.createJwtToken(payload);
