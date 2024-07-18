@@ -70,10 +70,10 @@ async function clearDatabase(app: INestApplication): Promise<void> {
 
         await entityManager.transaction(async (transEntityManager) => {
             const tableNames = transEntityManager.connection.entityMetadatas
-                .map((entity) => entity.tableName)
+                .map((entity) => `"${entity.tableName}"`)
                 .join(', ');
 
-            await transEntityManager.query(`TRUNCATE "${tableNames}" RESTART IDENTITY CASCADE;`);
+            await transEntityManager.query(`TRUNCATE ${tableNames} RESTART IDENTITY CASCADE;`);
         });
     } catch (error) {
         throw new Error(`ERROR: Cleaning test db: ${error}`);

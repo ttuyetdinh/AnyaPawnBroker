@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
 import { AuthPayload } from './interfaces/auth-payload.interface';
 
-export const testUser = (): User => ({
+export const testUser = (): Partial<User> => ({
     id: '1',
     email: 'a@gmail.com',
     password: '1234',
@@ -71,7 +71,7 @@ describe('AuthService', () => {
 
     it('can sign up a user', async () => {
         // Arrange
-        const newUser = testUser();
+        const newUser = testUser() as User;
 
         // Act
         const createdUser = await service.signUp(newUser);
@@ -85,7 +85,7 @@ describe('AuthService', () => {
     });
 
     it('throws an error if user already exists', async () => {
-        const newUser = testUser();
+        const newUser = testUser() as User;
         (testUserService.isUserExist as jest.Mock).mockResolvedValueOnce(true);
 
         await expect(service.signUp(newUser)).rejects.toThrow('User already exists');
@@ -117,7 +117,7 @@ describe('AuthService', () => {
 
     it('return user with token if login is successful', async () => {
         // Arrange
-        const newUser = testUser();
+        const newUser = testUser() as User;
         const authUser: AuthUserDto = {
             email: 'a@gmail.com',
             password: '1234',

@@ -61,7 +61,7 @@ describe('AuthController', () => {
     });
 
     it('should sign up a user and return defined fields', async () => {
-        const newUser = testUser();
+        const newUser = testUser() as User;
 
         const user = await controller.signUp(newUser);
 
@@ -76,7 +76,7 @@ describe('AuthController', () => {
     });
 
     it('should log in a user and return defined fields', async () => {
-        const toLoginUser = testUser();
+        const toLoginUser = testUser() as User;
 
         const user = await controller.login(toLoginUser);
 
