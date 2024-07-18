@@ -1,12 +1,12 @@
 {
     "scripts": {
-        "start": "node dist/main.js",
-        "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
-        "prestart": "npm run build",
         "build": "tsc",
-        "load:test-env": "dotenv -e .evn.test",
-        "test:e2e": "dotenv -e .evn.test --config ./test/jest-e2e.json",
-        "test:e2e:watch": "dotenv -e .evn.test jest --watch --detectOpenHandles --config ./test/jest-e2e.json",
+        "prestart": "npm run build",
+        "start:prod": "npm run prestart && dotenv -e .env.prod node dist/main.js",
+        "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+        "load:test-env": "dotenv -e .env.test",
+        "test:e2e": "dotenv -e .env.test jest --config ./test/jest-e2e.json",
+        "test:e2e:watch": "dotenv -e .env.test jest --watch --detectOpenHandles --config ./test/jest-e2e.json",
         "test:watch": "jest --watch --config jest.config.js"
     },
     "dependencies": {

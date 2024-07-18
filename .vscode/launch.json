@@ -19,12 +19,13 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": ["<node_internals>/**"],
+            "name": "Launch Program (Prod",
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
             "program": "${workspaceFolder}\\src\\main.ts",
             "preLaunchTask": "npm: build",
             "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env.prod" // config the environment file to use
             // "internalConsoleOptions": "openOnSessionStart" // only works with "console": "internalConsole"
         },
         {
