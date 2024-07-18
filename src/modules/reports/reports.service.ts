@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReportDto } from './dtos/create-report.dto';
+import { QueryParamsReportDto } from './dtos/queryparams-report.dto';
 import { Report } from './report.entity';
 
 @Injectable()
@@ -22,6 +23,24 @@ export class ReportService {
 
     async findAll() {
         const reports = this.repo.find();
+        return reports;
+    }
+
+    async findAllWithFilter(queryParams: QueryParamsReportDto) {
+        const query = this.repo.createQueryBuilder().select('*').where('1=1');
+
+        Object.entries(queryParams).forEach(([key, value]) => {
+            if (!value) {
+                return;
+            }
+            if (typeof value === 'string') {
+                query.andWhere(`LOWER(${key}) LIKE LOWER(:${key})`, { [key]: `%${value}%` });
+            } else if (typeof value === 'number') {
+                query.andWhere(`${key} = :${key}`, { [key]: value });
+            }
+        });
+
+        const reports = query.getRawMany();
         return reports;
     }
 

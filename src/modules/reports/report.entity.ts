@@ -60,9 +60,9 @@ export class Report {
     })
     updated_at: Date;
 
-    @CreateDateColumn({
+    @Column({
         type: 'timestamp with time zone',
-        default: null,
+        nullable: true,
     })
     approved_at: Date;
 

@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    UseInterceptors,
+} from '@nestjs/common';
 import { CurrentUser } from '../../decorators/current-user.decorator';
 import { Public } from '../../decorators/public-access.decorator';
 import { Roles } from '../../decorators/role.decorator';
@@ -7,6 +17,7 @@ import { CurrentUserInterceptor } from '../../interceptors/current-user.intercep
 import { DateTransformToLocal } from '../../interceptors/date-transform.interceptor';
 import { Serialize } from '../../interceptors/serialize.interceptor';
 import { CreateReportDto } from './dtos/create-report.dto';
+import { QueryParamsReportDto } from './dtos/queryparams-report.dto';
 import { ReportDto } from './dtos/report.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
 import { ReportService } from './reports.service';
@@ -20,9 +31,10 @@ export class ReportController {
 
     @Public()
     @Get()
-    async getReport() {
+    async getReport(@Query() query: QueryParamsReportDto) {
         // get report
-        return this.reportService.findAll();
+        // return this.reportService.findAll();
+        return this.reportService.findAllWithFilter(query);
     }
 
     @Roles(Role.USER)
