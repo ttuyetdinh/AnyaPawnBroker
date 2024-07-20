@@ -19,7 +19,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program (Prod",
+            "name": "Launch Program (Prod)",
             "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
             "program": "${workspaceFolder}\\src\\main.ts",
             "preLaunchTask": "npm: build",

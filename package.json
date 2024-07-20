@@ -7,7 +7,13 @@
         "load:test-env": "dotenv -e .env.test",
         "test:e2e": "dotenv -e .env.test jest --config ./test/jest-e2e.json",
         "test:e2e:watch": "dotenv -e .env.test jest --watch --detectOpenHandles --config ./test/jest-e2e.json",
-        "test:watch": "jest --watch --config jest.config.js"
+        "test:watch": "jest --watch --config jest.config.js",
+        "typeorm": "typeorm-ts-node-commonjs",
+        "typeorm:generate": "npm run typeorm -- migration:generate ./src/migrations/%npm_config_name% -d ./src/config/typeOrm.config.ts",
+        "typeorm:run": "npm run typeorm -- migration:run -d ./src/config/typeOrm.config.ts",
+        "typeorm:create": "npm run typeorm -- migration:create ./src/migrations/%npm_config_name%",
+        "typeorm:revert": "npm run typeorm -- migration:revert -d ./src/config/typeOrm.config.ts",
+        "typeorm:show": "npm run typeorm -- migration:show -d ./src/config/typeOrm.config.ts"
     },
     "dependencies": {
         "@nestjs/common": "^10.3.9",
