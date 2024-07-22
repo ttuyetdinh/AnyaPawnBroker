@@ -6,12 +6,12 @@ import { UsersService } from '../../users/users.service';
 import { AuthPayload } from '../interfaces/auth-payload.interface';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     constructor(private configService: ConfigService, private userService: UsersService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get('JWT_ACCESS_SECRET'),
+            secretOrKey: configService.get('JWT_REFRESH_SECRET'),
         });
     }
 
@@ -21,6 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         if (!user) {
             throw new BadRequestException('User not found');
         }
+
         // return value of this method will be injected into the request object as req.user
         return payload;
     }

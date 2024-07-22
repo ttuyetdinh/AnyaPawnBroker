@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { scrypt as _scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
@@ -11,7 +12,11 @@ import { AuthPayload } from './interfaces/auth-payload.interface';
 const scrypt = promisify(_scrypt);
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService, private jwtService: JwtService) {}
+    constructor(
+        private usersService: UsersService,
+        private jwtService: JwtService,
+        private configService: ConfigService,
+    ) {}
 
     async signUp(newUser: CreateUserDto) {
         const isUserExist = await this.usersService.isUserExist(newUser.email);
@@ -48,9 +53,21 @@ export class AuthService {
             role: user.role as Role,
         };
 
-        const jwtToken = await this.createJwtToken(payload);
+        const accessToken = await this.createAccessToken(payload);
+        const refreshToken = await this.createRefreshToken(payload);
 
-        return { ...user, token: jwtToken };
+        return { ...user, accessToken, refreshToken };
+    }
+
+    async refreshAccessToken(user: any) {
+        const payload: AuthPayload = {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+        };
+        const accessToken = await this.createAccessToken(payload);
+
+        return { accessToken };
     }
 
     // private methods
@@ -68,7 +85,17 @@ export class AuthService {
         return hashBuffer.toString('hex') === hashedPassword;
     }
 
-    private async createJwtToken(payload: AuthPayload) {
-        return this.jwtService.sign(payload);
+    private async createAccessToken(payload: AuthPayload) {
+        return this.jwtService.sign(payload, {
+            secret: this.configService.get('JWT_ACCESS_SECRET'),
+            expiresIn: this.configService.get('JWT_ACCESS_EXPIRES_IN'),
+        });
+    }
+
+    private async createRefreshToken(payload: AuthPayload) {
+        return this.jwtService.sign(payload, {
+            secret: this.configService.get('JWT_REFRESH_SECRET'),
+            expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN'),
+        });
     }
 }
