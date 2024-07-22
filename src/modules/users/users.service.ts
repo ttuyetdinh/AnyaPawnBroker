@@ -11,7 +11,7 @@ export class UsersService {
         this.repo = repo;
     }
 
-    async isUserExist(email: string) {
+    async isEmailExist(email: string) {
         return this.repo.existsBy({ email: email });
     }
 

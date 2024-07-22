@@ -19,8 +19,8 @@ export class AuthService {
     ) {}
 
     async signUp(newUser: CreateUserDto) {
-        const isUserExist = await this.usersService.isUserExist(newUser.email);
-        if (isUserExist) {
+        const isEmailExist = await this.usersService.isEmailExist(newUser.email);
+        if (isEmailExist) {
             throw new Error('User already exists');
         }
 

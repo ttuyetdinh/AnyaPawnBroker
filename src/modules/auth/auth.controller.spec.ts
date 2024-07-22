@@ -14,7 +14,7 @@ describe('AuthController', () => {
 
     beforeEach(async () => {
         fakeUserService = {
-            isUserExist: jest.fn().mockImplementation((email: string) => {
+            isEmailExist: jest.fn().mockImplementation((email: string) => {
                 return Promise.resolve(false);
             }),
             create: jest.fn().mockImplementation((newUser: CreateUserDto) => {}),

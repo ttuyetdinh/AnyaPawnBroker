@@ -22,7 +22,7 @@ describe('AuthService', () => {
         let users: User[] = [];
         // all cost in the beforeEach block will be reset before each test so don't need to reset the mock
         testUserService = {
-            isUserExist: jest.fn().mockImplementation((email: string) => {
+            isEmailExist: jest.fn().mockImplementation((email: string) => {
                 const user = users.find((u) => u.email === email);
                 return Promise.resolve(!!user);
             }),
@@ -61,7 +61,7 @@ describe('AuthService', () => {
 
         service = module.get<AuthService>(AuthService);
         jest.spyOn(testUserService, 'create');
-        jest.spyOn(testUserService, 'isUserExist');
+        jest.spyOn(testUserService, 'isEmailExist');
         jest.spyOn(testUserService, 'findByEmail');
     });
 
@@ -86,7 +86,7 @@ describe('AuthService', () => {
 
     it('throws an error if user already exists', async () => {
         const newUser = testUser() as User;
-        (testUserService.isUserExist as jest.Mock).mockResolvedValueOnce(true);
+        (testUserService.isEmailExist as jest.Mock).mockResolvedValueOnce(true);
 
         await expect(service.signUp(newUser)).rejects.toThrow('User already exists');
     });
