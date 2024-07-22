@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { scrypt as _scrypt, randomBytes } from 'crypto';
@@ -7,6 +7,7 @@ import { Role } from '../../enums/role.enum';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
+import { ChangePasswordDto } from './dtos/change-password.dto';
 import { AuthPayload } from './interfaces/auth-payload.interface';
 
 const scrypt = promisify(_scrypt);
@@ -39,12 +40,12 @@ export class AuthService {
     async login(authUser: AuthUserDto) {
         const user = await this.usersService.findByEmail(authUser.email);
         if (!user) {
-            throw new Error('User not found');
+            throw new UnauthorizedException('User not found');
         }
 
         const isValidPassword = await this.verifyPassword(authUser.password, user.password);
         if (!isValidPassword) {
-            throw new Error('Invalid password');
+            throw new UnauthorizedException('Invalid password');
         }
 
         const payload: AuthPayload = {
@@ -68,6 +69,26 @@ export class AuthService {
         const accessToken = await this.createAccessToken(payload);
 
         return { accessToken };
+    }
+
+    async changePassword(changePasswordDto: ChangePasswordDto) {
+        let user = await this.usersService.findByEmail(changePasswordDto.email);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const isValidPassword = await this.verifyPassword(
+            changePasswordDto.oldPassword,
+            user.password,
+        );
+        if (!isValidPassword) {
+            throw new Error('Invalid password');
+        }
+
+        const hashedPassword = await this.hashPassword(changePasswordDto.newPassword);
+        user = await this.usersService.update(user.id, { password: hashedPassword });
+
+        return user;
     }
 
     // private methods

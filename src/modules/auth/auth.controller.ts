@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CurrentUser } from '../../decorators/current-user.decorator';
 import { Public } from '../../decorators/public-access.decorator';
 import { JwtRefreshGuard } from '../../guard/jwt-refresh.guard';
@@ -8,6 +8,7 @@ import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { UserDto } from '../users/dtos/user.dto';
 import { AuthService } from './auth.service';
 import { AuthUserDto } from './dtos/auth-user.dto';
+import { ChangePasswordDto } from './dtos/change-password.dto';
 
 @Serialize(UserDto)
 @UseInterceptors(CurrentUserInterceptor)
@@ -36,7 +37,7 @@ export class AuthController {
 
     @Public()
     @Post('change-password')
-    async changePassword(@Req() req: any) {
-        return 'Password changed successfully';
+    async changePassword(@Body() changePass: ChangePasswordDto) {
+        return this.authService.changePassword(changePass);
     }
 }

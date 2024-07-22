@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         });
     }
 
+    // user is validated before it goes to the validate method
     async validate(payload: AuthPayload) {
         const user = await this.userService.findById(payload.id);
 
