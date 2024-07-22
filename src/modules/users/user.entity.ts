@@ -18,6 +18,12 @@ export class User {
     @Column({ default: 'user' })
     role: string;
 
+    @Column({
+        type: 'timestamp with time zone',
+        nullable: true,
+    })
+    passwordChangedAt: Date;
+
     // one to many relationship with reports
     // @OneToMany('Report', 'user')
     @OneToMany(() => Report, (report) => report.user)

@@ -84,9 +84,12 @@ export class AuthService {
         if (!isValidPassword) {
             throw new Error('Invalid password');
         }
-
+        const passwordChangedAt = new Date();
         const hashedPassword = await this.hashPassword(changePasswordDto.newPassword);
-        user = await this.usersService.update(user.id, { password: hashedPassword });
+        user = await this.usersService.update(user.id, {
+            password: hashedPassword,
+            passwordChangedAt: passwordChangedAt,
+        });
 
         return user;
     }
